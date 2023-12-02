@@ -1,8 +1,9 @@
+# SPDX-License-Identifier: 0BSD
+
 # FROM debian:trixie-20231120@sha256:75f2c56ea6193ef5148af3c19d0321fcb0f1ffe9724dd6389df6bc50a46d116a
 FROM ubuntu:jammy-20231004@sha256:c9cf959fd83770dfdefd8fb42cfef0761432af36a764c077aed54bbc5bb25368
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for riscv64"
-LABEL License="BSD Zero Clause License"
 
 ENV EDK2_RELEASE=edk2-stable202311
 ENV EDK2_TEST_RELEASE=81dfa8d53d4290366ae41e1f4c2ed6d6c5016c07
