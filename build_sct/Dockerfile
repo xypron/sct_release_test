@@ -22,6 +22,7 @@ RUN apt-get install -y \
 	gcc \
 	gcc-riscv64-linux-gnu \
 	git \
+	iasl \
 	make \
 	python3 \
 	sudo \
@@ -56,3 +57,15 @@ RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
 
 RUN tar -czf SctPackageRISCV64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
     SctPackageRISCV64
+
+# Build EDK II
+RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
+    build -a RISCV64 --buildtarget RELEASE \
+    -p OvmfPkg/RiscVVirt/RiscVVirtQemu.dsc -t GCC5 -n $(nproc)
+
+RUN cp Build/RiscVVirtQemu/RELEASE_GCC5/FV/RISCV_VIRT_CODE.fd .
+RUN cp Build/RiscVVirtQemu/RELEASE_GCC5/FV/RISCV_VIRT_VARS.fd .
+RUN truncate -s 33554432 RISCV_VIRT_CODE.fd
+RUN truncate -s 33554432 RISCV_VIRT_VARS.fd
+RUN tar -czf RiscVVirtQemu.tgz --transform 's|^|RiscVVirtQemu/|' RISCV_VIRT_*.fd
+RUN rm *.fd
