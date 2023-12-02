@@ -21,6 +21,25 @@ Build UEFI SCT for RISC-V
 Run SCT
 -------
 
+Prepare the disk image
+''''''''''''''''''''''
+
+* Create a disk image with a 1 GiB ESP.
+* Copy the content of SctPackageRISCV64.tgz to the disk
+
+Run SCT
+'''''''
+
+* In the EFI shell execute SctPackageRISCV64/InstallRISCV64.efi to install the
+  SCT.
+* Execute SCT/SCT.efi
+* Generate a result file with SCT.efi -g <filename>
+
+Run with QEMU
+'''''''''''''
+
+QEMU >= 8.1 is needed.
+
 .. code-block:: bash
 
     /usr/bin/qemu-system-riscv64 \
