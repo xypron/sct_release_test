@@ -4,8 +4,10 @@ This directory contains the result files from running the SCT on QEMU with
 * EDK II, version edk2-stable202311
 * SCT commit 81dfa8d53d4290366ae41e1f4c2ed6d6c5016c07
 
-A failure in the emulator occured twice. The SCT continued after restarting
-the emulation.
+A failure in the emulator occured twice. Cf.
+https://gitlab.com/qemu-project/qemu/-/issues/2014
+
+The SCT continued after restarting the emulation.
 
 
 ------------------------------------------------------------
