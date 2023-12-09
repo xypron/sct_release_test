@@ -64,6 +64,9 @@ RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
 RUN tar -czf SctPackageX64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
     SctPackageX64
 
+RUN tar -czf IhvSctPackageX64.tgz -C Build/IhvSct/RELEASE_GCC5/ \
+    SctPackageX64
+
 RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
     build -a X64 --buildtarget RELEASE \
     -p  ShellPkg/ShellPkg.dsc -t GCC -n $(nproc)
