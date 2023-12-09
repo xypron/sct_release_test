@@ -50,8 +50,8 @@ RUN cd edk2-test && git submodule update --init
 RUN cd edk2 && source edksetup.sh --reconfig && \
     make -C BaseTools -j $(nproc)
 
-COPY SctPatches.tgz /home/user/SctPatches.tgz
-RUN tar -xzf SctPatches.tgz
+COPY 0001-SctPkg-Fix-X64-build-errors-for-GCC-toolchain.patch \
+     /home/user/0001-SctPkg-Fix-X64-build-errors-for-GCC-toolchain.patch
 RUN git config --global user.email "user@localhost"
 RUN git config --global user.name "User"
 RUN cd edk2-test && git am --keep-cr ../00*.patch
@@ -60,10 +60,6 @@ RUN cd edk2-test && git am --keep-cr ../00*.patch
 RUN test -h SctPkg || ln -s edk2-test/uefi-sct/SctPkg/ SctPkg
 RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
     SctPkg/build.sh X64 GCC RELEASE -n $(nproc) || true
-
-# Do this manually as IHV build fails
-RUN cd Build/UefiSct/RELEASE_GCC5 && \
-    ../../../SctPkg/CommonGenFramework.sh uefi_sct X64 InstallX64.efi
 
 RUN tar -czf SctPackageX64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
     SctPackageX64
