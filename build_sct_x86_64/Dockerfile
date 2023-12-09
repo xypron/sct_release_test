@@ -67,3 +67,7 @@ RUN cd Build/UefiSct/RELEASE_GCC5 && \
 
 RUN tar -czf SctPackageX64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
     SctPackageX64
+
+RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
+    build -a X64 --buildtarget RELEASE \
+    -p  ShellPkg/ShellPkg.dsc -t GCC -n $(nproc)
