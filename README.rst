@@ -8,7 +8,7 @@ Build UEFI SCT for RISC-V
 
     docker build --progress tty -t sct-riscv64:latest \
       -f build_sct_riscv64/Dockerfile .
-    docker run -ti sct-riscv64:latest &
+    docker container create sct-riscv64:latest
     docker container ls -a | \
       grep sct-riscv64:latest | \
       sed -e 's|\(\S*\).*|\1:/home/user/SctPackageRISCV64.tgz .|' | \
@@ -17,7 +17,10 @@ Build UEFI SCT for RISC-V
       grep sct-riscv64:latest | \
       sed -e 's|\(\S*\).*|\1:/home/user/RiscVVirtQemu.tgz .|' | \
       xargs docker cp
-    kill -SIGKILL $!
+    docker container ls -a | \
+      grep sct-riscv64:latest | \
+      sed -e 's|\(\S*\).*|\1|' | \
+      xargs docker container rm
 
 Run SCT
 -------
