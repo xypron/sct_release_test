@@ -8,19 +8,15 @@ Build UEFI SCT for RISC-V
 
     docker build --progress tty -t sct-riscv64:latest \
       -f build_sct_riscv64/Dockerfile .
-    docker container create sct-riscv64:latest
-    docker container ls -a | \
-      grep sct-riscv64:latest | \
+    docker container prune --force --filter 'label=TmpSctCopy'
+    docker container create -l TmpSctCopy sct-riscv64:latest
+    docker container ls -a --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/SctPackageRISCV64.tgz .|' | \
       xargs docker cp
-    docker container ls -a | \
-      grep sct-riscv64:latest | \
+    docker container ls -a --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/RiscVVirtQemu.tgz .|' | \
       xargs docker cp
-    docker container ls -a | \
-      grep sct-riscv64:latest | \
-      sed -e 's|\(\S*\).*|\1|' | \
-      xargs docker container rm
+    docker container prune -f --filter 'label=TmpSctCopy'
 
 Run SCT
 -------
