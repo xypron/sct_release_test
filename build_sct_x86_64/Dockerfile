@@ -5,7 +5,7 @@ MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for amd64"
 
 ENV EDK2_RELEASE=edk2-stable202311
-ENV EDK2_TEST_RELEASE=81dfa8d53d4290366ae41e1f4c2ed6d6c5016c07
+ENV EDK2_TEST_RELEASE=847e0363e846296881c238dc43766fd40f6c2aec
 
 ENV WORKSPACE=/home/user
 ENV GCC_X86_64_PREFIX=riscv64-linux-gnu-
@@ -50,21 +50,12 @@ RUN cd edk2-test && git submodule update --init
 RUN cd edk2 && source edksetup.sh --reconfig && \
     make -C BaseTools -j $(nproc)
 
-COPY 0001-SctPkg-Fix-X64-build-errors-for-GCC-toolchain.patch \
-     /home/user/0001-SctPkg-Fix-X64-build-errors-for-GCC-toolchain.patch
-RUN git config --global user.email "user@localhost"
-RUN git config --global user.name "User"
-RUN cd edk2-test && git am --keep-cr ../00*.patch
-
 # Build SCT
 RUN test -h SctPkg || ln -s edk2-test/uefi-sct/SctPkg/ SctPkg
 RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
     SctPkg/build.sh X64 GCC RELEASE -n $(nproc) || true
 
 RUN tar -czf SctPackageX64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
-    SctPackageX64
-
-RUN tar -czf IhvSctPackageX64.tgz -C Build/IhvSct/RELEASE_GCC5/ \
     SctPackageX64
 
 RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
