@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: 0BSD
 
-# FROM debian:trixie-20231120@sha256:75f2c56ea6193ef5148af3c19d0321fcb0f1ffe9724dd6389df6bc50a46d116a
-FROM ubuntu:jammy-20231004@sha256:c9cf959fd83770dfdefd8fb42cfef0761432af36a764c077aed54bbc5bb25368
+FROM ubuntu:jammy@sha256:8eab65df33a6de2844c9aefd19efe8ddb87b7df5e9185a4ab73af936225685bb
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for riscv64"
 
 ENV EDK2_RELEASE=edk2-stable202311
-ENV EDK2_TEST_RELEASE=81dfa8d53d4290366ae41e1f4c2ed6d6c5016c07
+ENV EDK2_TEST_RELEASE=847e0363e846296881c238dc43766fd40f6c2aec
 
 ENV WORKSPACE=/home/user
 ENV GCC_RISCV64_PREFIX=riscv64-linux-gnu-
@@ -55,7 +54,7 @@ RUN cd edk2 && source edksetup.sh --reconfig && \
 # Build SCT
 RUN test -h SctPkg || ln -s edk2-test/uefi-sct/SctPkg/ SctPkg
 RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
-    SctPkg/build.sh RISCV64 GCC RELEASE || true
+    SctPkg/build.sh RISCV64 GCC RELEASE
 
 RUN tar -czf SctPackageRISCV64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
     SctPackageRISCV64
