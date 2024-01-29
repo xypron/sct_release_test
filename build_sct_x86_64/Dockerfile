@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: 0BSD
 
-FROM ubuntu:jammy@sha256:8eab65df33a6de2844c9aefd19efe8ddb87b7df5e9185a4ab73af936225685bb
+FROM ubuntu:jammy@sha256:cb2af41f42b9c9bc9bcdc7cf1735e3c4b3d95b2137be86fd940373471a34c8b0
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for amd64"
 
 ENV EDK2_RELEASE=edk2-stable202311
-ENV EDK2_TEST_RELEASE=847e0363e846296881c238dc43766fd40f6c2aec
+ENV EDK2_TEST_RELEASE=e1ce8925c1ec2b47e8bbf7c15f47866aca1ff9fc
 
 ENV WORKSPACE=/home/user
 ENV GCC_X86_64_PREFIX=riscv64-linux-gnu-
