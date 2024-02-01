@@ -8,7 +8,6 @@ ENV EDK2_RELEASE=edk2-stable202311
 ENV EDK2_TEST_RELEASE=e1ce8925c1ec2b47e8bbf7c15f47866aca1ff9fc
 
 ENV WORKSPACE=/home/user
-ENV GCC_X86_64_PREFIX=riscv64-linux-gnu-
 ENV PACKAGES_PATH=/home/user/edk2:/home/user/edk2-test/uefi-sct
 ENV EDK_TOOLS_PATH=/home/user/edk2/BaseTools
 ENV CONF_PATH=/home/user/edk2/Conf
