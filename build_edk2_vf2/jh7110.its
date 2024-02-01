@@ -6,10 +6,10 @@
     images {
         edk2 {
             description = "EDK II for StarFive VisionFive 2";
-            data = /incbin/("Build/JH7110/RELEASE_GCC5/FV/JH7110.fd");
+            data = /incbin/("JH7110.fd");
             type = "firmware";
             os = "u-boot";
-            arch = "riscv64";
+            arch = "riscv";
             compression = "none";
             load = <0x0 0x40000000>;
             entry = <0x0 0x40000000>;
@@ -20,7 +20,7 @@
 
         config_1 {
             description = "EDK II for StarFive VisionFive 2";
-            loadables = "edk2";
+            firmware = "edk2";
         };
     };
 };
