@@ -1,8 +1,27 @@
 Test UEFI SCT
 =============
 
+Install build dependencies
+--------------------------
+
+To install Docker on Ubuntu:
+
+.. code-block:: bash
+
+    sudo apt-get update
+    sudo apt-get install docker.io
+
+In current Ubuntu versions Docker buildx is available as a replacement for the
+legacy build client.
+
+.. code-block:: bash
+
+    sudo apt-get install docker-buildx
+
 Build UEFI SCT for RISC-V
 -------------------------
+
+All Docker commands must be run as root.
 
 .. code-block:: bash
 
