@@ -4,7 +4,7 @@ FROM ubuntu:jammy@sha256:bcc511d82482900604524a8e8d64bf4c53b2461868dac55f4d04d66
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for loongarch64"
 
-ENV EDK2_RELEASE=edk2-stable202311
+ENV EDK2_RELEASE=e8166a852e63ee0c7c37291c1f88b19cc4692514
 ENV EDK2_TEST_RELEASE=e1ce8925c1ec2b47e8bbf7c15f47866aca1ff9fc
 ENV EDK2_PLATFORMS_RELEASE=8b9a0ec76bdc12239391ab7e08055906c0eac731
 
@@ -15,6 +15,7 @@ ENV EDK_TOOLS_PATH=/home/user/edk2/BaseTools
 ENV CONF_PATH=/home/user/edk2/Conf
 ENV TOOL_CHAIN_TAG=GCC
 ENV CROSS_COMPILE_64=/opt/gcc/bin/loongarch64-linux-
+ENV GCC_LOONGARCH64_PREFIX=/opt/gcc/bin/loongarch64-linux-
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -75,3 +76,9 @@ RUN tar -czf SctPackageLOONGARCH64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
     SctPackageLOONGARCH64
 
 # Build EDK II
+RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
+    build --buildtarget=RELEASE --tagname=GCC --arch=LOONGARCH64 \
+    --platform=Platform/Loongson/LoongArchQemuPkg/Loongson.dsc
+
+RUN cp Build/LoongArchQemu/RELEASE_GCC/FV/QEMU_VARS.fd .
+RUN cp Build/LoongArchQemu/RELEASE_GCC/FV/QEMU_EFI.fd .
