@@ -29,10 +29,10 @@ All Docker commands must be run as root.
       -f build_sct_riscv64/Dockerfile .
     docker container prune --force --filter 'label=TmpSctCopy'
     docker container create -l TmpSctCopy sct-riscv64:latest
-    docker container ls -a --filter 'label=TmpSctCopy' | \
+    docker container ls -a -q --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/SctPackageRISCV64.tgz .|' | \
       xargs docker cp
-    docker container ls -a --filter 'label=TmpSctCopy' | \
+    docker container ls -a -q --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/RiscVVirtQemu.tgz .|' | \
       xargs docker cp
     docker container prune -f --filter 'label=TmpSctCopy'
