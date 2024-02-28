@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: 0BSD
 
-FROM ubuntu:jammy@sha256:8eab65df33a6de2844c9aefd19efe8ddb87b7df5e9185a4ab73af936225685bb
+# Ubuntu jammy-amd64-20240212
+FROM ubuntu:jammy@sha256:81bba8d1dde7fc1883b6e95cd46d6c9f4874374f2b360c8db82620b33f6b5ca1
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for riscv64"
 
-ENV EDK2_RELEASE=edk2-stable202311
-ENV EDK2_TEST_RELEASE=847e0363e846296881c238dc43766fd40f6c2aec
+ENV EDK2_RELEASE=edk2-stable202402
+ENV EDK2_TEST_RELEASE=cabb98d44be94e7547605435a0be7c4946d10f8b
 
 ENV WORKSPACE=/home/user
 ENV GCC_RISCV64_PREFIX=riscv64-linux-gnu-
