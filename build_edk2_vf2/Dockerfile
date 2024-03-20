@@ -5,7 +5,7 @@ FROM ubuntu:jammy-20231004@sha256:c9cf959fd83770dfdefd8fb42cfef0761432af36a764c0
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build EDK II for StarFive VisionFive 2"
 
-ENV EDK2_RELEASE=REL_VF2_JUN2023
+ENV EDK2_RELEASE=REL_VF2_JUN2023-stable202302
 ENV EDK2_PLATFORM_RELEASE=REL_VF2_JUN2023
 
 ENV WORKSPACE=/home/user
