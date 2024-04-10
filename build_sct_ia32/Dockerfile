@@ -4,8 +4,8 @@ FROM ubuntu:jammy@sha256:cb2af41f42b9c9bc9bcdc7cf1735e3c4b3d95b2137be86fd9403734
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for amd64"
 
-ENV EDK2_RELEASE=edk2-stable202311
-ENV EDK2_TEST_RELEASE=e1ce8925c1ec2b47e8bbf7c15f47866aca1ff9fc
+ENV EDK2_RELEASE=edk2-stable202402
+ENV EDK2_TEST_RELEASE=edk2-test-rc1_202404
 
 ENV WORKSPACE=/home/user
 ENV PACKAGES_PATH=/home/user/edk2:/home/user/edk2-test/uefi-sct

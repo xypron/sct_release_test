@@ -4,8 +4,8 @@ FROM ubuntu:jammy@sha256:bcc511d82482900604524a8e8d64bf4c53b2461868dac55f4d04d66
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for arm"
 
-ENV EDK2_RELEASE=edk2-stable202311
-ENV EDK2_TEST_RELEASE=e1ce8925c1ec2b47e8bbf7c15f47866aca1ff9fc
+ENV EDK2_RELEASE=edk2-stable202402
+ENV EDK2_TEST_RELEASE=edk2-test-rc1_202404
 
 ENV WORKSPACE=/home/user
 ENV GCC_ARM_PREFIX=arm-linux-gnu-
