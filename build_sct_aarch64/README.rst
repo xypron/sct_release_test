@@ -35,7 +35,8 @@ Run SCT
       -device usb-kbd \
       -drive if=pflash,format=raw,unit=0,file=AAVMF_CODE.fd,readonly=on \
       -drive if=pflash,format=raw,unit=1,file=AAVMF_VARS.fd \
-      -drive file=sct.img,format=raw,if=virtio \
+      -drive file=sct.img,format=raw,if=none,id=vda \
+      -device virtio-blk-device,drive=vda,bootindex=1 \
       -device virtio-net-device,netdev=net0 \
       -netdev user,id=net0
 
