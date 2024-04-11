@@ -5,7 +5,7 @@ the vendor git repositories:
 * edk2: REL_VF2_JUN2023
 * edk2-platform: REL_VF2_JUN2023
 
-Twice the execution of the SCT stalled requiring manual reboot.
+The SCT was built with these tags:
 
-* MediaAccessTest\SimpleFileSystemProtocolTest
-* MediaAccessTest\DiskIO2ProtocolTest
+* edk: edk2-stable202402
+* edk-test: edk2-test-rc1_202404
