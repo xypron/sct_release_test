@@ -6,7 +6,7 @@ MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build EDK II for SiFive HiFive Unleashed"
 
 ENV EDK2_RELEASE=284dbac43da752ee34825c8b3f6f9e8281cb5a19
-ENV EDK2_PLATFORMS_RELEASE=d3d0d17564c76163687843b4b5b46576b254773b
+ENV EDK2_PLATFORM_RELEASE=119ba4ef8e57b197219c050ffb65f32322dac49b
 
 ENV WORKSPACE=/home/user
 ENV GCC5_RISCV64_PREFIX=riscv64-linux-gnu-
@@ -45,7 +45,8 @@ RUN cd edk2 && git reset --hard $EDK2_RELEASE
 RUN cd edk2 && git submodule update --init
 
 # Clone EDK II Platforms
-RUN git clone -v https://github.com/tianocore/edk2-platforms.git
+# RUN git clone -v https://github.com/tianocore/edk2-platforms.git
+RUN git clone -v https://github.com/leiflindholm/edk2-platforms
 RUN cd edk2-platforms && git reset --hard $EDK2_PLATFORM_RELEASE
 RUN cd edk2-platforms && git submodule update --init
 
