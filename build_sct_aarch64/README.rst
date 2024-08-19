@@ -14,6 +14,12 @@ All Docker commands must be run as root.
     docker container ls -a -q --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/SctPackageAARCH64.tgz .|' | \
       xargs docker cp
+    docker container ls -a -q --filter 'label=TmpSctCopy' | \
+      sed -e 's|\(\S*\).*|\1:/home/user/QEMU_EFI.fd .|' | \
+      xargs docker cp
+    docker container ls -a -q --filter 'label=TmpSctCopy' | \
+      sed -e 's|\(\S*\).*|\1:/home/user/QEMU_VARS.fd .|' | \
+      xargs docker cp
     docker container prune -f --filter 'label=TmpSctCopy'
 
 Prepare SCT image
@@ -33,8 +39,8 @@ Run SCT
       -device virtio-gpu-pci \
       -device qemu-xhci \
       -device usb-kbd \
-      -drive if=pflash,format=raw,unit=0,file=AAVMF_CODE.fd,readonly=on \
-      -drive if=pflash,format=raw,unit=1,file=AAVMF_VARS.fd \
+      -drive if=pflash,format=raw,unit=0,file=QEMU_EFI.fd,readonly=on \
+      -drive if=pflash,format=raw,unit=1,file=QEMU_VARS.fd \
       -drive file=sct.img,format=raw,if=none,id=vda \
       -device virtio-blk-device,drive=vda,bootindex=1 \
       -device virtio-net-device,netdev=net0 \

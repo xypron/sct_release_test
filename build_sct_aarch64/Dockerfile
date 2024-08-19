@@ -4,8 +4,8 @@ FROM ubuntu:jammy@sha256:bcc511d82482900604524a8e8d64bf4c53b2461868dac55f4d04d66
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for aarch64"
 
-ENV EDK2_RELEASE=edk2-stable202402
-ENV EDK2_TEST_RELEASE=edk2-test-rc2_202405
+ENV EDK2_RELEASE=edk2-stable202405
+ENV EDK2_TEST_RELEASE=edk2-test-stable202406
 
 ENV WORKSPACE=/home/user
 ENV GCC_AARCH64_PREFIX=aarch64-linux-gnu-
@@ -50,6 +50,16 @@ RUN cd edk2-test && git submodule update --init
 # Build BaseTools
 RUN cd edk2 && source edksetup.sh --reconfig && \
     make -C BaseTools -j $(nproc)
+
+# Build EDK II
+RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
+    build -a AARCH64 --buildtarget RELEASE \
+    -p ArmVirtPkg/ArmVirtQemu.dsc -t GCC -n $(nproc)
+
+RUN cp Build/ArmVirtQemu-AARCH64/RELEASE_GCC/FV/QEMU_EFI.fd .
+RUN cp Build/ArmVirtQemu-AARCH64/RELEASE_GCC/FV/QEMU_VARS.fd .
+RUN truncate -s 64M QEMU_EFI.fd
+RUN truncate -s 64M QEMU_VARS.fd
 
 # Build SCT
 RUN test -h SctPkg || ln -s edk2-test/uefi-sct/SctPkg/ SctPkg
