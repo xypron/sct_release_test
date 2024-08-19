@@ -5,8 +5,8 @@ FROM ubuntu:jammy@sha256:81bba8d1dde7fc1883b6e95cd46d6c9f4874374f2b360c8db82620b
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for riscv64"
 
-ENV EDK2_RELEASE=edk2-stable202402
-ENV EDK2_TEST_RELEASE=edk2-test-rc2_202405
+ENV EDK2_RELEASE=edk2-stable202405
+ENV EDK2_TEST_RELEASE=edk2-test-stable202406
 
 ENV WORKSPACE=/home/user
 ENV GCC_RISCV64_PREFIX=riscv64-linux-gnu-
