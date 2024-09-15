@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: 0BSD
 
-# Ubuntu jammy-amd64-20240212
-FROM ubuntu:jammy@sha256:81bba8d1dde7fc1883b6e95cd46d6c9f4874374f2b360c8db82620b33f6b5ca1
+# Ubuntu noble-amd64-20240801
+FROM ubuntu:noble@sha256:8a37d68f4f73ebf3d4efafbcf66379bf3728902a8038616808f04e34a9ab63ee
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for riscv64"
 
