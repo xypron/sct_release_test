@@ -1,6 +1,14 @@
 SCT for RISCV64
 ===============
 
+Install build dependencies
+--------------------------
+
+.. code-block:: bash
+
+    sudo apt-get install docker-buildx qemu-system-misc qemu-user-static
+
+
 Build UEFI SCT for RISCV64
 --------------------------
 
