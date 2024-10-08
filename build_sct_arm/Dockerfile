@@ -6,7 +6,7 @@ MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for arm"
 
 ENV EDK2_RELEASE=edk2-stable202402
-ENV EDK2_TEST_RELEASE=edk2-test-rc2_202405
+ENV EDK2_TEST_RELEASE=edk2-test-stable202406
 
 ENV WORKSPACE=/home/user
 ENV GCC_ARM_PREFIX=arm-linux-gnu-

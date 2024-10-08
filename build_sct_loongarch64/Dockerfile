@@ -6,7 +6,7 @@ MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for loongarch64"
 
 ENV EDK2_RELEASE=edk2-stable202402
-ENV EDK2_TEST_RELEASE=edk2-test-rc2_202405
+ENV EDK2_TEST_RELEASE=edk2-test-stable202406
 ENV EDK2_PLATFORMS_RELEASE=8b9a0ec76bdc12239391ab7e08055906c0eac731
 
 ENV WORKSPACE=/home/user
