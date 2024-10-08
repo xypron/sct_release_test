@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: 0BSD
 
-# FROM debian:trixie-20231120@sha256:75f2c56ea6193ef5148af3c19d0321fcb0f1ffe9724dd6389df6bc50a46d116a
-FROM ubuntu:jammy-20231004@sha256:c9cf959fd83770dfdefd8fb42cfef0761432af36a764c077aed54bbc5bb25368
+# Ubuntu noble-amd64-20240827.1
+FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build EDK II for SiFive HiFive Unleashed"
 

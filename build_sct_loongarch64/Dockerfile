@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: 0BSD
 
-FROM ubuntu:jammy@sha256:bcc511d82482900604524a8e8d64bf4c53b2461868dac55f4d04d660e61983cb
+# Ubuntu noble-amd64-20240827.1
+FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for loongarch64"
 
