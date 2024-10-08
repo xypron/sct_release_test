@@ -69,3 +69,6 @@ RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
 
 RUN tar -czf SctPackageAARCH64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
     SctPackageAARCH64
+
+# Get Shell.efi
+RUN cp Build/ArmVirtQemu-AARCH64/RELEASE_GCC/AARCH64/Shell.efi .
