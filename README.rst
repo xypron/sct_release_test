@@ -18,57 +18,26 @@ legacy build client.
 
     sudo apt-get install docker-buildx
 
-Build UEFI SCT for RISC-V
--------------------------
+Build UEFI SCT
+--------------
+
+Please, navigate to the relevant build_sct directory for the archtitecture
+you are interested in and follow the respective README.rst.
+
+* build_sct_arm
+* build_sct_ia32
+* build_sct_x86_64
+* build_sct_loongarch64
+* build_sct_riscv64
+* build_sct_aarch64
+
+Device specific EDK II can be built in directories
+
+* build_edk2_vf2
 
 All Docker commands must be run as root.
 
-.. code-block:: bash
+Run the SCT
+-----------
 
-    docker build --progress tty -t sct-riscv64:latest \
-      -f build_sct_riscv64/Dockerfile .
-    docker container prune --force --filter 'label=TmpSctCopy'
-    docker container create -l TmpSctCopy sct-riscv64:latest
-    docker container ls -a -q --filter 'label=TmpSctCopy' | \
-      sed -e 's|\(\S*\).*|\1:/home/user/SctPackageRISCV64.tgz .|' | \
-      xargs docker cp
-    docker container ls -a -q --filter 'label=TmpSctCopy' | \
-      sed -e 's|\(\S*\).*|\1:/home/user/RiscVVirtQemu.tgz .|' | \
-      xargs docker cp
-    docker container prune -f --filter 'label=TmpSctCopy'
-
-Run SCT
--------
-
-Prepare the disk image
-''''''''''''''''''''''
-
-* Create a disk image with a 1 GiB ESP.
-* Copy the content of SctPackageRISCV64.tgz to the disk
-
-Run SCT
-'''''''
-
-* In the EFI shell execute SctPackageRISCV64/InstallRISCV64.efi to install the
-  SCT.
-* Execute SCT/SCT.efi
-* Generate a result file with SCT.efi -g <filename>
-
-Run with QEMU
-'''''''''''''
-
-QEMU >= 8.1 is needed.
-
-.. code-block:: bash
-
-    /usr/bin/qemu-system-riscv64 \
-      -M virt,acpi=off -accel tcg -m 4096 \
-      -serial mon:stdio \
-      -device virtio-gpu-pci \
-      -device qemu-xhci \
-      -device usb-kbd \
-      -drive if=pflash,format=raw,unit=0,file=RISCV_VIRT_CODE.fd,readonly=on \
-      -drive if=pflash,format=raw,unit=1,file=RISCV_VIRT_VARS.fd \
-      -drive file=sct.img,format=raw,if=virtio \
-      -device virtio-net-device,netdev=net0 \
-      -netdev user,id=net0
+Follow the respective README.rst in the subdirectories.
