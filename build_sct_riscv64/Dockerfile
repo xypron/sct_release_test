@@ -5,7 +5,7 @@ FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build SCT for riscv64"
 
-ENV EDK2_RELEASE=edk2-stable202405
+ENV EDK2_RELEASE=edk2-stable202408
 ENV EDK2_TEST_RELEASE=edk2-test-stable202406
 
 ENV WORKSPACE=/home/user
@@ -38,9 +38,16 @@ RUN useradd -m -U user
 USER user:user
 WORKDIR /home/user
 
+RUN git config --global user.name 'user'
+RUN git config --global user.email 'user@localhost'
+
 # Clone EDK II
 RUN git clone -v https://github.com/tianocore/edk2 edk2
 RUN cd edk2 && git reset --hard $EDK2_RELEASE
+COPY 0001-UnitTestFrameworkPkg-Use-TianoCore-mirror-of-subhook.patch \
+     /tmp/
+RUN cd edk2 && git am --keep-cr \
+     /tmp/0001-UnitTestFrameworkPkg-Use-TianoCore-mirror-of-subhook.patch
 RUN cd edk2 && git submodule update --init
 
 # Clone SCT
@@ -62,7 +69,10 @@ RUN tar -czf SctPackageRISCV64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
 
 # Build EDK II
 RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
-    build -a RISCV64 --buildtarget DEBUG -DNETWORK_TLS_ENABLE \
+    build -a RISCV64 --buildtarget DEBUG \
+    -DNETWORK_TLS_ENABLE \
+    -DNETWORK_HTTP_ENABLE \
+    -DNETWORK_HTTP_BOOT_ENABLE \
     -p OvmfPkg/RiscVVirt/RiscVVirtQemu.dsc -t GCC -n $(nproc)
 
 RUN cp Build/RiscVVirtQemu/DEBUG_GCC/FV/RISCV_VIRT_CODE.fd .
