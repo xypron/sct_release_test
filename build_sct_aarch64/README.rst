@@ -8,7 +8,8 @@ All Docker commands must be run as root.
 
 .. code-block:: bash
 
-    docker buildx build -t sct-aarch64:latest .
+    docker buildx build -f Dockerfile --build-arg ARCH=$(uname -i) \
+      -t sct-aarch64:latest .
     docker container prune --force --filter 'label=TmpSctCopy'
     docker container create -l TmpSctCopy sct-aarch64:latest
     docker container ls -a -q --filter 'label=TmpSctCopy' | \
