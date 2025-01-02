@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: 0BSD
 
-# Ubuntu noble-amd64-20240827.1
-FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a
+# Ubuntu noble-amd64-20241118.1
+FROM ubuntu:noble@sha256:6e75a10070b0fcb0bead763c5118a369bc7cc30dfc1b0749c491bbb21f15c3c7
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-LABEL Description="Build SCT for amd64"
+LABEL Description="Build SCT for X64"
 
-ENV EDK2_RELEASE=edk2-stable202402
+ENV EDK2_RELEASE=edk2-stable202411
 ENV EDK2_TEST_RELEASE=edk2-test-stable202406
 
 ENV WORKSPACE=/home/user
