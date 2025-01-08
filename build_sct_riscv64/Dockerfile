@@ -1,9 +1,16 @@
 # SPDX-License-Identifier: 0BSD
 
+ARG ARCH=x86_64
+
 # Ubuntu noble-amd64-20240827.1
-FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a
-MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a as x86_64_base
+# Ubuntu noble-riscv64-20241118.1
+FROM ubuntu:noble@sha256:87bd6635283a024141e603e4b767679df50cd5599e142c103404f6f8c709f860 as riscv64_base
+
+FROM ${ARCH}_base
+
 LABEL Description="Build SCT for riscv64"
+MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
 ENV EDK2_RELEASE=edk2-stable202408
 ENV EDK2_TEST_RELEASE=edk2-test-stable202406
