@@ -3,9 +3,9 @@
 ARG ARCH=x86_64
 
 # Ubuntu noble-amd64-20240827.1
-FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a as x86_64_base
+FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a AS x86_64_base
 # Ubuntu noble-arm64-20241015
-FROM ubuntu:noble@sha256:1d79a71338df5bd07cc91b695451fe7ef932aae3b4e2f6b6d45885ef5082911e as aarch64_base
+FROM ubuntu:noble@sha256:1d79a71338df5bd07cc91b695451fe7ef932aae3b4e2f6b6d45885ef5082911e AS aarch64_base
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
 FROM ${ARCH}_base
