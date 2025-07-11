@@ -2,18 +2,18 @@
 
 ARG ARCH=x86_64
 
-# Ubuntu noble-amd64-20240827.1
-FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a AS x86_64_base
-# Ubuntu noble-riscv64-20241118.1
-FROM ubuntu:noble@sha256:87bd6635283a024141e603e4b767679df50cd5599e142c103404f6f8c709f860 AS riscv64_base
+# Ubuntu noble-amd64-20250619
+FROM ubuntu:noble@sha256:dbdff34bb41cecdb07c79af373b44bb4c9ccba2520f014221fb95845f14bc6c1 AS x86_64_base
+# Ubuntu noble-riscv64-20250619
+FROM ubuntu:noble@sha256:57c1ca3175929bb17d8fc8b6847e7751aedae98fe21d41b418083083b3793418 AS riscv64_base
 
 FROM ${ARCH}_base
 
 LABEL Description="Build SCT for riscv64"
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-ENV EDK2_RELEASE=edk2-stable202408
-ENV EDK2_TEST_RELEASE=edk2-test-stable202406
+ENV EDK2_RELEASE=edk2-stable202505
+ENV EDK2_TEST_RELEASE=b5707921e1b19c17fcce3a2b1a1f7c729cdbc4c3
 
 ENV WORKSPACE=/home/user
 ENV GCC_RISCV64_PREFIX=riscv64-linux-gnu-
@@ -51,10 +51,6 @@ RUN git config --global user.email 'user@localhost'
 # Clone EDK II
 RUN git clone -v https://github.com/tianocore/edk2 edk2
 RUN cd edk2 && git reset --hard $EDK2_RELEASE
-COPY 0001-UnitTestFrameworkPkg-Use-TianoCore-mirror-of-subhook.patch \
-     /tmp/
-RUN cd edk2 && git am --keep-cr \
-     /tmp/0001-UnitTestFrameworkPkg-Use-TianoCore-mirror-of-subhook.patch
 RUN cd edk2 && git submodule update --init
 
 # Clone SCT
