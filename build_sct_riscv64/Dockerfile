@@ -73,14 +73,14 @@ RUN tar -czf SctPackageRISCV64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
 
 # Build EDK II
 RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
-    build -a RISCV64 --buildtarget DEBUG \
+    build -a RISCV64 --buildtarget RELEASE \
     -DNETWORK_TLS_ENABLE \
     -DNETWORK_HTTP_ENABLE \
     -DNETWORK_HTTP_BOOT_ENABLE \
     -p OvmfPkg/RiscVVirt/RiscVVirtQemu.dsc -t GCC -n $(nproc)
 
-RUN cp Build/RiscVVirtQemu/DEBUG_GCC/FV/RISCV_VIRT_CODE.fd .
-RUN cp Build/RiscVVirtQemu/DEBUG_GCC/FV/RISCV_VIRT_VARS.fd .
+RUN cp Build/RiscVVirtQemu/RELEASE_GCC/FV/RISCV_VIRT_CODE.fd .
+RUN cp Build/RiscVVirtQemu/RELEASE_GCC/FV/RISCV_VIRT_VARS.fd .
 RUN truncate -s 33554432 RISCV_VIRT_CODE.fd
 RUN truncate -s 33554432 RISCV_VIRT_VARS.fd
 RUN tar -czf RiscVVirtQemu.tgz --transform 's|^|RiscVVirtQemu/|' RISCV_VIRT_*.fd
