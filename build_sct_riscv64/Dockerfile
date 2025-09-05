@@ -9,8 +9,9 @@ FROM ubuntu:noble@sha256:d395fc5247d3375ba7d43d917e72fe4e0c24de38fb9f0af8f00b442
 
 FROM ${ARCH}_base
 
-LABEL Description="Build SCT for riscv64"
-MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+LABEL org.opencontainers.image.description="Build SCT for riscv64"
+LABEL org.opencontainers.image.source="https://github.com/xypron/sct_release_test.git"
+LABEL org.opencontainers.image.authors="Heinrich Schuchardt <heinrich.schuchardt@canonical.com>"
 
 ENV EDK2_RELEASE=edk2-stable202508
 ENV EDK2_TEST_RELEASE=edk2-test-rc1_202509
