@@ -26,6 +26,9 @@ All Docker commands must be run as root.
     docker container ls -a -q --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/RiscVVirtQemu.tgz .|' | \
       xargs docker cp
+    docker container ls -a -q --filter 'label=TmpSctCopy' | \
+      sed -e 's|\(\S*\).*|\1:/home/user/Shell.efi .|' | \
+      xargs docker cp
     docker container prune -f --filter 'label=TmpSctCopy'
 
 Prepare SCT image

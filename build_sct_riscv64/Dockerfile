@@ -85,3 +85,4 @@ RUN truncate -s 33554432 RISCV_VIRT_CODE.fd
 RUN truncate -s 33554432 RISCV_VIRT_VARS.fd
 RUN tar -czf RiscVVirtQemu.tgz --transform 's|^|RiscVVirtQemu/|' RISCV_VIRT_*.fd
 RUN rm *.fd
+RUN cp Build/RiscVVirtQemu/RELEASE_GCC/RISCV64/Shell.efi .
