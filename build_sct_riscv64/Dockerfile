@@ -2,10 +2,10 @@
 
 ARG ARCH=x86_64
 
-# Ubuntu noble-amd64-20250619
-FROM ubuntu:noble@sha256:dbdff34bb41cecdb07c79af373b44bb4c9ccba2520f014221fb95845f14bc6c1 AS x86_64_base
-# Ubuntu noble-riscv64-20250619
-FROM ubuntu:noble@sha256:57c1ca3175929bb17d8fc8b6847e7751aedae98fe21d41b418083083b3793418 AS riscv64_base
+# Ubuntu noble-amd64-20250805
+FROM ubuntu:noble@sha256:3f83fb03282ef4e453bdf0060e0d83833bb3cf6e6f36f54d9b8517d311d78e03 AS x86_64_base
+# Ubuntu noble-riscv64-20250805
+FROM ubuntu:noble@sha256:d395fc5247d3375ba7d43d917e72fe4e0c24de38fb9f0af8f00b44270d14a31a AS riscv64_base
 
 FROM ${ARCH}_base
 
