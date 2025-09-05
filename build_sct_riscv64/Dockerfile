@@ -12,8 +12,8 @@ FROM ${ARCH}_base
 LABEL Description="Build SCT for riscv64"
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-ENV EDK2_RELEASE=edk2-stable202505
-ENV EDK2_TEST_RELEASE=b5707921e1b19c17fcce3a2b1a1f7c729cdbc4c3
+ENV EDK2_RELEASE=edk2-stable202508
+ENV EDK2_TEST_RELEASE=edk2-test-rc1_202509
 
 ENV WORKSPACE=/home/user
 ENV GCC_RISCV64_PREFIX=riscv64-linux-gnu-
