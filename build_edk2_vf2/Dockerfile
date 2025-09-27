@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: 0BSD
 
-# Ubuntu noble-amd64-20250910
-FROM ubuntu:noble@sha256:ffdfad7bbbcb91047cc4b6fed95467961da3627b3ae6c7ec4bd1eb47282d284c
+# Ubuntu jammy-amd64-20250819
+FROM ubuntu:jammy@sha256:d0afa9fbcf16134b776fbba4a04c31d476eece2d080c66c887fdd2608e4219a9
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build EDK II for StarFive VisionFive 2"
 
