@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: 0BSD
 
-# Ubuntu noble-amd64-20240827.1
-FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a
+# Ubuntu noble-amd64-20250910
+FROM ubuntu:noble@sha256:ffdfad7bbbcb91047cc4b6fed95467961da3627b3ae6c7ec4bd1eb47282d284c
 MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 LABEL Description="Build EDK II for StarFive VisionFive 2"
 
 ENV EDK2_RELEASE=REL_VF2_JUN2023-stable202302
 ENV EDK2_PLATFORM_RELEASE=REL_VF2_JUN2023
-ENV EDK2_TEST_RELEASE=edk2-test-stable202406
+ENV EDK2_TEST_RELEASE=2b2a16ac239cd89d778cb79ae6e42c533fc4c25a
 
 ENV WORKSPACE=/home/user
 ENV GCC5_RISCV64_PREFIX=riscv64-linux-gnu-
