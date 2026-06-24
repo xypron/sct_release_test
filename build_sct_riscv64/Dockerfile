@@ -2,10 +2,10 @@
 
 ARG ARCH=x86_64
 
-# Ubuntu noble-amd64-20250805
-FROM ubuntu:noble@sha256:3f83fb03282ef4e453bdf0060e0d83833bb3cf6e6f36f54d9b8517d311d78e03 AS x86_64_base
-# Ubuntu noble-riscv64-20250805
-FROM ubuntu:noble@sha256:d395fc5247d3375ba7d43d917e72fe4e0c24de38fb9f0af8f00b44270d14a31a AS riscv64_base
+# Ubuntu noble-amd64-20260509.1
+FROM ubuntu:noble@sha256:023f8a753c22258c9fe2d0005a7d28258038da7d620e9f93e9ad78aa266f9f11 AS x86_64_base
+# Ubuntu noble-riscv64-20260509.1
+FROM ubuntu:noble@sha256:1e8576943d3f3cf4c234eca60c41af5d29bbb0d1250f6315f173af5c94e4c7fa AS riscv64_base
 
 FROM ${ARCH}_base
 
@@ -13,8 +13,8 @@ LABEL org.opencontainers.image.description="Build SCT for riscv64"
 LABEL org.opencontainers.image.source="https://github.com/xypron/sct_release_test.git"
 LABEL org.opencontainers.image.authors="Heinrich Schuchardt <heinrich.schuchardt@canonical.com>"
 
-ENV EDK2_RELEASE=edk2-stable202508
-ENV EDK2_TEST_RELEASE=edk2-test-stable202509
+ENV EDK2_RELEASE=edk2-stable202605
+ENV EDK2_TEST_RELEASE=17bf62e0302770f27ecdd0267d566d4d386b6137
 
 ENV WORKSPACE=/home/user
 ENV GCC_RISCV64_PREFIX=riscv64-linux-gnu-
@@ -68,7 +68,7 @@ RUN test -h SctPkg || ln -s edk2-test/uefi-sct/SctPkg/ SctPkg
 RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
     SctPkg/build.sh RISCV64 GCC RELEASE
 
-RUN tar -czf SctPackageRISCV64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
+RUN tar -czf SctPackageRISCV64.tgz -C Build/UefiSct/RELEASE_GCC/ \
     SctPackageRISCV64
 
 # Build EDK II
