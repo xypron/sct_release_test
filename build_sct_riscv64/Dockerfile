@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.source="https://github.com/xypron/sct_release_tes
 LABEL org.opencontainers.image.authors="Heinrich Schuchardt <heinrich.schuchardt@canonical.com>"
 
 ENV EDK2_RELEASE=edk2-stable202605
-ENV EDK2_TEST_RELEASE=17bf62e0302770f27ecdd0267d566d4d386b6137
+ENV EDK2_TEST_RELEASE=edk2-test-stable202608
 
 ENV WORKSPACE=/home/user
 ENV GCC_RISCV64_PREFIX=riscv64-linux-gnu-
