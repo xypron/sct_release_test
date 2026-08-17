@@ -53,7 +53,8 @@ Run SCT
       -drive file=sct.img,format=raw,if=none,id=vda \
       -device virtio-blk-device,drive=vda,bootindex=1 \
       -device virtio-net-device,netdev=net0 \
-      -netdev user,id=net0
+      -netdev user,id=net0 \
+      -device virtio-rng-pci
 
 In UEFI Shell
 
