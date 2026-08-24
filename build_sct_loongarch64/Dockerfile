@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: 0BSD
 
-# Ubuntu noble-amd64-20240827.1
-FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a
-MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-LABEL Description="Build SCT for loongarch64"
+# Ubuntu resolute-amd64-20260811.1
+FROM ubuntu:resolute@sha256:2260313b31c8c011cd2eebe728008efac1b3982be73eb71348ea2648d2c0e09b
 
-ENV EDK2_RELEASE=edk2-stable202402
-ENV EDK2_TEST_RELEASE=edk2-test-stable202406
-ENV EDK2_PLATFORMS_RELEASE=8b9a0ec76bdc12239391ab7e08055906c0eac731
+LABEL Description="Build SCT for loongarch64"
+LABEL org.opencontainers.image.source="https://github.com/xypron/sct_release_test.git"
+LABEL org.opencontainers.image.authors="Heinrich Schuchardt <heinrich.schuchardt@canonical.com>"
+
+ENV EDK2_RELEASE=edk2-stable202605
+ENV EDK2_TEST_RELEASE=edk2-test-stable202608
 
 ENV WORKSPACE=/home/user
 ENV GCC_LOONGARCH64_PREFIX=loongarch64-linux-gnu-
-ENV PACKAGES_PATH=/home/user/edk2:/home/user/edk2-test/uefi-sct:/home/user/edk2-platforms
+ENV PACKAGES_PATH=/home/user/edk2:/home/user/edk2-test/uefi-sct
 ENV EDK_TOOLS_PATH=/home/user/edk2/BaseTools
 ENV CONF_PATH=/home/user/edk2/Conf
 ENV TOOL_CHAIN_TAG=GCC
@@ -36,18 +37,21 @@ SHELL ["/bin/bash", "-c"]
 
 # Download gcc
 WORKDIR /tmp
-RUN wget https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/13.2.0/x86_64-gcc-13.2.0-nolibc-loongarch64-linux.tar.gz
-RUN sha256sum x86_64-gcc-13.2.0-nolibc-loongarch64-linux.tar.gz | \
-    grep ce1ee73f78d20c30f8ed94b48d13814bf185eb7f668f0aaef89baec33eeed2a0
-RUN tar -xzf x86_64-gcc-13.2.0-nolibc-loongarch64-linux.tar.gz \
-    --transform 's|gcc-13.2.0-nolibc/loongarch64-linux/|opt/gcc/|' -C /
-RUN rm x86_64-gcc-13.2.0-nolibc-loongarch64-linux.tar.gz
+RUN wget https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/16.2.0/x86_64-gcc-16.2.0-nolibc-loongarch64-linux.tar.gz
+RUN sha256sum x86_64-gcc-16.2.0-nolibc-loongarch64-linux.tar.gz | \
+    grep 12b3fe8ceeac364d1889bc98a9925850a57880819812a985f5ac33779e313c30
+RUN tar -xzf x86_64-gcc-16.2.0-nolibc-loongarch64-linux.tar.gz \
+    --transform 's|gcc-16.2.0-nolibc/loongarch64-linux/|opt/gcc/|' -C /
+RUN rm x86_64-gcc-16.2.0-nolibc-loongarch64-linux.tar.gz
 
 # Create our user/group
 RUN echo user ALL=NOPASSWD: ALL > /etc/sudoers.d/user
 RUN useradd -m -U user
 USER user:user
 WORKDIR /home/user
+
+RUN git config --global user.name 'user'
+RUN git config --global user.email 'user@localhost'
 
 # Clone EDK II
 RUN git clone -v https://github.com/tianocore/edk2 edk2
@@ -59,11 +63,6 @@ RUN git clone -v https://github.com/tianocore/edk2-test edk2-test
 RUN cd edk2-test && git reset --hard $EDK2_TEST_RELEASE
 RUN cd edk2-test && git submodule update --init
 
-# Clone EDK II Platforms
-RUN git clone -v https://github.com/tianocore/edk2-platforms.git
-RUN cd edk2-platforms && git reset --hard $EDK2_PLATFORMS_RELEASE
-RUN cd edk2-platforms && git submodule update --init
-
 # Build BaseTools
 RUN cd edk2 && source edksetup.sh --reconfig && \
     make -C BaseTools -j $(nproc)
@@ -71,15 +70,24 @@ RUN cd edk2 && source edksetup.sh --reconfig && \
 # Build SCT
 RUN test -h SctPkg || ln -s edk2-test/uefi-sct/SctPkg/ SctPkg
 RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
-    SctPkg/build.sh LOONGARCH64 GCC5 RELEASE
+    SctPkg/build.sh LOONGARCH64 GCC RELEASE
 
-RUN tar -czf SctPackageLOONGARCH64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
+RUN tar -czf SctPackageLOONGARCH64.tgz -C Build/UefiSct/RELEASE_GCC/ \
     SctPackageLOONGARCH64
 
 # Build EDK II
-RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
-    build --buildtarget=RELEASE --tagname=GCC --arch=LOONGARCH64 \
-    --platform=Platform/Loongson/LoongArchQemuPkg/Loongson.dsc
+RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
+    build -a LOONGARCH64 --buildtarget RELEASE \
+    -DNETWORK_IP6_ENABLE \
+    -DNETWORK_TLS_ENABLE \
+    -DNETWORK_HTTP_ENABLE \
+    -DNETWORK_HTTP_BOOT_ENABLE \
+    -p OvmfPkg/LoongArchVirt/LoongArchVirtQemu.dsc -t GCC -n $(nproc)
 
-RUN cp Build/LoongArchQemu/RELEASE_GCC/FV/QEMU_VARS.fd .
-RUN cp Build/LoongArchQemu/RELEASE_GCC/FV/QEMU_EFI.fd .
+RUN cp Build/LoongArchVirtQemu/RELEASE_GCC/FV/QEMU_EFI.fd .
+RUN cp Build/LoongArchVirtQemu/RELEASE_GCC/FV/QEMU_VARS.fd .
+RUN truncate -s 16777216 QEMU_EFI.fd
+RUN truncate -s 16777216 QEMU_VARS.fd
+RUN tar -czf LoongArchVirtQemu.tgz --transform 's|^|LoongArchVirtQemu/|' QEMU_*.fd
+RUN rm *.fd
+RUN cp Build/LoongArchVirtQemu/RELEASE_GCC/LOONGARCH64/Shell.efi .
