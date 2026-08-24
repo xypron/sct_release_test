@@ -34,10 +34,14 @@ Run SCT
 .. code-block:: bash
 
     qemu-system-loongarch64 \
-    -machine virt -m 4G -cpu la464 -smp 1 \
-    -nographic \
-    -bios QEMU_EFI.fd -nographic \
-    -drive file=sct.img,format=raw,if=virtio
+      -machine virt -m 4G -cpu la464 -smp 1 \
+      -serial mon:stdio \
+      -device virtio-gpu-pci \
+      -device qemu-xhci \
+      -device usb-kbd \
+      -drive if=pflash,format=raw,unit=0,file=QEMU_EFI.fd,readonly=on \
+      -drive if=pflash,format=raw,unit=1,file=QEMU_VARS.fd \
+      -drive file=sct.img,format=raw,if=virtio
 
 In UEFI Shell
 
