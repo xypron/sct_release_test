@@ -2,18 +2,19 @@
 
 ARG ARCH=x86_64
 
-# Ubuntu noble-amd64-20240827.1
-FROM ubuntu:noble@sha256:77d57fd89366f7d16615794a5b53e124d742404e20f035c22032233f1826bd6a AS x86_64_base
-# Ubuntu noble-arm64-20241015
-FROM ubuntu:noble@sha256:1d79a71338df5bd07cc91b695451fe7ef932aae3b4e2f6b6d45885ef5082911e AS aarch64_base
-MAINTAINER Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+# Ubuntu noble-amd64-20260509.1
+FROM ubuntu:noble@sha256:023f8a753c22258c9fe2d0005a7d28258038da7d620e9f93e9ad78aa266f9f11 AS x86_64_base
+# Ubuntu noble-arm64-20260705
+FROM ubuntu:noble@sha256:1e0a86e57d247923571b75e0aaf48a1449cf8c543d51fb3e07a4a7d7bfa79316 AS aarch64_base
 
 FROM ${ARCH}_base
 
-LABEL Description="Build SCT for aarch64"
+LABEL org.opencontainers.image.description="Build SCT for aarchv64"
+LABEL org.opencontainers.image.source="https://github.com/xypron/sct_release_test.git"
+LABEL org.opencontainers.image.authors="Heinrich Schuchardt <heinrich.schuchardt@canonical.com>"
 
-ENV EDK2_RELEASE=edk2-stable202408
-ENV EDK2_TEST_RELEASE=edk2-test-stable202406
+ENV EDK2_RELEASE=edk2-stable202605
+ENV EDK2_TEST_RELEASE=edk2-test-stable202608
 
 ENV WORKSPACE=/home/user
 ENV GCC_AARCH64_PREFIX=aarch64-linux-gnu-
@@ -51,10 +52,6 @@ RUN git config --global user.email 'user@localhost'
 # Clone EDK II
 RUN git clone -v https://github.com/tianocore/edk2 edk2
 RUN cd edk2 && git reset --hard $EDK2_RELEASE
-COPY 0001-UnitTestFrameworkPkg-Use-TianoCore-mirror-of-subhook.patch \
-     /tmp/
-RUN cd edk2 && git am --keep-cr \
-     /tmp/0001-UnitTestFrameworkPkg-Use-TianoCore-mirror-of-subhook.patch
 RUN cd edk2 && git submodule update --init
 
 # Clone SCT
@@ -74,18 +71,22 @@ RUN cd edk2 && source edksetup.sh BaseTools && cd ../ && \
     -DNETWORK_HTTP_BOOT_ENABLE \
     -p ArmVirtPkg/ArmVirtQemu.dsc -t GCC -n $(nproc)
 
-RUN cp Build/ArmVirtQemu-AARCH64/RELEASE_GCC/FV/QEMU_EFI.fd .
-RUN cp Build/ArmVirtQemu-AARCH64/RELEASE_GCC/FV/QEMU_VARS.fd .
-RUN truncate -s 64M QEMU_EFI.fd
-RUN truncate -s 64M QEMU_VARS.fd
-
 # Build SCT
 RUN test -h SctPkg || ln -s edk2-test/uefi-sct/SctPkg/ SctPkg
 RUN cd edk2 && source edksetup.sh --reconfig && cd ../ && \
     SctPkg/build.sh AARCH64 GCC RELEASE
 
-RUN tar -czf SctPackageAARCH64.tgz -C Build/UefiSct/RELEASE_GCC5/ \
+# Copy EDK II flash images
+RUN cp Build/ArmVirtQemu-AArch64/RELEASE_GCC/FV/QEMU_EFI.fd .
+RUN cp Build/ArmVirtQemu-AArch64/RELEASE_GCC/FV/QEMU_VARS.fd .
+RUN truncate -s 64M QEMU_EFI.fd
+RUN truncate -s 64M QEMU_VARS.fd
+RUN tar -czf Aarch64VirtQemu.tgz --transform 's|^|Aarch64VirtQemu/|' QEMU_*.fd
+RUN rm *.fd
+
+# Create SCT archive
+RUN tar -czf SctPackageAARCH64.tgz -C Build/UefiSct/RELEASE_GCC/ \
     SctPackageAARCH64
 
 # Get Shell.efi
-RUN cp Build/ArmVirtQemu-AARCH64/RELEASE_GCC/AARCH64/Shell.efi .
+RUN cp Build/ArmVirtQemu-AArch64/RELEASE_GCC/AARCH64/Shell.efi .

@@ -16,10 +16,7 @@ All Docker commands must be run as root.
       sed -e 's|\(\S*\).*|\1:/home/user/SctPackageAARCH64.tgz .|' | \
       xargs docker cp
     docker container ls -a -q --filter 'label=TmpSctCopy' | \
-      sed -e 's|\(\S*\).*|\1:/home/user/QEMU_EFI.fd .|' | \
-      xargs docker cp
-    docker container ls -a -q --filter 'label=TmpSctCopy' | \
-      sed -e 's|\(\S*\).*|\1:/home/user/QEMU_VARS.fd .|' | \
+      sed -e 's|\(\S*\).*|\1:/home/user/Aarch64VirtQemu.tgz .|' | \
       xargs docker cp
     docker container ls -a -q --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/Shell.efi .|' | \
