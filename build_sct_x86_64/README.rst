@@ -12,6 +12,9 @@ All Docker commands must be run as root.
     docker container prune --force --filter 'label=TmpSctCopy'
     docker container create -l TmpSctCopy sct-x86_64:latest
     docker container ls -a -q --filter 'label=TmpSctCopy' | \
+      sed -e 's|\(\S*\).*|\1:/home/user/OvmfPkgX64.tgz .|' | \
+      xargs docker cp
+    docker container ls -a -q --filter 'label=TmpSctCopy' | \
       sed -e 's|\(\S*\).*|\1:/home/user/SctPackageX64.tgz .|' | \
       xargs docker cp
     docker container ls -a -q --filter 'label=TmpSctCopy' | \
